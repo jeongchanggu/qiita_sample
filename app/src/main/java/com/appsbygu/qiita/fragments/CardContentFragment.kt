@@ -10,7 +10,7 @@ import com.appsbygu.qiita.R
 import com.appsbygu.qiita.adapters.ArticleAdapter
 
 
-class CardContentFragment: ContentFragment() {
+class CardContentFragment : ContentFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         recyclerView = inflater.inflate(R.layout.recycler_view, container, false) as RecyclerView

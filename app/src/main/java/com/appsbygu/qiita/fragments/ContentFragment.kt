@@ -12,19 +12,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-abstract class ContentFragment: Fragment() {
+abstract class ContentFragment : Fragment() {
     protected var articles: ArrayList<Article> = ArrayList()
     private val disposables = CompositeDisposable()
     private var page: Int = 0
-    private var progressCallback: ()-> Unit = {}
-    private var onclickCallback: (String)-> Unit = {}
+    private var progressCallback: () -> Unit = {}
+    private var onclickCallback: (String) -> Unit = {}
     private var progressStatus = false
 
     lateinit var recyclerView: RecyclerView
 
     override fun onStart() {
         // TODO : CARDタブから入ってくるとき、onCreateViewが呼ばれる。その対策。原因？理由？をわかってから修正する事
-        if(page == 0) fetchArticle()
+        if (page == 0) fetchArticle()
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -40,16 +40,16 @@ abstract class ContentFragment: Fragment() {
         super.onDestroy()
     }
 
-    fun setProgressCallback(callback: (()->Unit)) {
+    fun setProgressCallback(callback: (() -> Unit)) {
         progressCallback = callback
     }
 
-    fun setOnclickCallback(callback: ((String)->Unit)) {
+    fun setOnclickCallback(callback: ((String) -> Unit)) {
         onclickCallback = callback
     }
 
     private fun fetchArticle() {
-        if(progressStatus) return
+        if (progressStatus) return
         progressStatus = true
 
         progressCallback.invoke()
@@ -61,12 +61,12 @@ abstract class ContentFragment: Fragment() {
         disposables.add(dispose)
     }
 
-    private fun afterArticleLoaded(articles: ArrayList<Article>){
+    private fun afterArticleLoaded(articles: ArrayList<Article>) {
         addArticles(articles)
         Toast.makeText(this.context, "PAGE : $page loaded", Toast.LENGTH_SHORT).show()
     }
 
-    private fun afterArticleLoadedFail(error: Throwable){
+    private fun afterArticleLoadedFail(error: Throwable) {
         Toast.makeText(this.context, getString(R.string.error_text_load_api), Toast.LENGTH_LONG).show()
     }
 
@@ -74,7 +74,7 @@ abstract class ContentFragment: Fragment() {
         var adapter = recyclerView.adapter as ArticleAdapter
         adapter.addArticles(articles)
         adapter.notifyDataSetChanged()
-        adapter.setOnclickCallback{ onclickCallback(it) }
+        adapter.setOnclickCallback { onclickCallback(it) }
         progressStatus = false
         progressCallback.invoke()
     }

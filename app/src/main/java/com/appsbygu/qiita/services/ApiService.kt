@@ -10,7 +10,9 @@ const val BASE_URL = "https://qiita.com/"
 
 class ApiService private constructor() {
 
-    private object Holder { val INSTANCE = ApiService() }
+    private object Holder {
+        val INSTANCE = ApiService()
+    }
 
     companion object {
         val instance: ApiService by lazy { Holder.INSTANCE }

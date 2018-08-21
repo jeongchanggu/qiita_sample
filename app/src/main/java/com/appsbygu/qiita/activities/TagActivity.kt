@@ -17,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_tag.*
 
-class TagActivity : AppCompatActivity(){
+class TagActivity : AppCompatActivity() {
 
     companion object {
         fun createIntent(context: Context): Intent {
@@ -38,7 +38,7 @@ class TagActivity : AppCompatActivity(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when(item?.itemId) {
+        return when (item?.itemId) {
             android.R.id.home -> {
                 finish()
                 true
@@ -56,7 +56,7 @@ class TagActivity : AppCompatActivity(){
         disposables.add(dispose)
     }
 
-    private fun afterTagLoaded(tags: ArrayList<Tag>){
+    private fun afterTagLoaded(tags: ArrayList<Tag>) {
         val adapter = TagAdapter(tags)
         tagListRecyclerView.setHasFixedSize(true)
         tagListRecyclerView.adapter = adapter
@@ -64,7 +64,7 @@ class TagActivity : AppCompatActivity(){
         underProgressbar.visibility = View.INVISIBLE
     }
 
-    private fun afterTagLoadedFail(error: Throwable){
+    private fun afterTagLoadedFail(error: Throwable) {
         Toast.makeText(this, getString(R.string.error_text_load_api), Toast.LENGTH_LONG).show()
     }
 

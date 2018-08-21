@@ -10,7 +10,7 @@ import com.appsbygu.qiita.R
 import com.appsbygu.qiita.models.tag.Tag
 import com.squareup.picasso.Picasso
 
-class TagAdapter(tags: ArrayList<Tag>) : RecyclerView.Adapter<TagAdapter.TagViewHolder>(){
+class TagAdapter(tags: ArrayList<Tag>) : RecyclerView.Adapter<TagAdapter.TagViewHolder>() {
 
     private val tags: ArrayList<Tag> = tags
 
@@ -30,7 +30,7 @@ class TagAdapter(tags: ArrayList<Tag>) : RecyclerView.Adapter<TagAdapter.TagView
         return tags.size
     }
 
-    class TagViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class TagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tagListRankingTextView: TextView = itemView.findViewById(R.id.tagListRankingTextView)
         val tagListTitleTextView: TextView = itemView.findViewById(R.id.tagListTitleTextView)
         val tagListPostCountTextView: TextView = itemView.findViewById(R.id.tagListPostCountTextView)

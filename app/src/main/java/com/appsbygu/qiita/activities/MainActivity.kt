@@ -75,16 +75,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val tabAdapter = TabAdapter(supportFragmentManager)
 
         val listFragment = ListContentFragment()
-        listFragment.setProgressCallback{ changeUnderProgressbarStatus() }
-        listFragment.setOnclickCallback{ onClickedArticle(it) }
+        listFragment.setProgressCallback { changeUnderProgressbarStatus() }
+        listFragment.setOnclickCallback { onClickedArticle(it) }
 
         val tileFragment = TileContentFragment()
-        tileFragment.setProgressCallback{ changeUnderProgressbarStatus() }
-        tileFragment.setOnclickCallback{ onClickedArticle(it) }
+        tileFragment.setProgressCallback { changeUnderProgressbarStatus() }
+        tileFragment.setOnclickCallback { onClickedArticle(it) }
 
         val cardFragment = CardContentFragment()
-        cardFragment.setProgressCallback{ changeUnderProgressbarStatus() }
-        cardFragment.setOnclickCallback{ onClickedArticle(it) }
+        cardFragment.setProgressCallback { changeUnderProgressbarStatus() }
+        cardFragment.setOnclickCallback { onClickedArticle(it) }
 
         tabAdapter.addTab(listFragment, getString(R.string.tab_name_list))
         tabAdapter.addTab(tileFragment, getString(R.string.tab_name_tile))
@@ -94,13 +94,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun changeUnderProgressbarStatus() {
-        when(underProgressbar.visibility) {
+        when (underProgressbar.visibility) {
             View.VISIBLE -> underProgressbar.visibility = View.INVISIBLE
             else -> underProgressbar.visibility = View.VISIBLE
         }
     }
 
-    private fun onClickedArticle(html: String){
+    private fun onClickedArticle(html: String) {
         val intent = ArticleActivity.createIntent(this, html)
         startActivity(intent)
     }

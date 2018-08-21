@@ -14,7 +14,7 @@ class ArticleActivity : AppCompatActivity() {
 
         fun createIntent(context: Context, html: String): Intent {
             return Intent(context, ArticleActivity::class.java)
-                    .putExtra(HTML_CODE,html)
+                    .putExtra(HTML_CODE, html)
         }
     }
 

@@ -14,14 +14,14 @@ import com.appsbygu.qiita.R
 import com.appsbygu.qiita.models.article.Article
 import com.squareup.picasso.Picasso
 
-class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val articles: ArrayList<Article> = articles
-    private var onclickCallback: (String)-> Unit = {}
+    private var onclickCallback: (String) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(resource, parent, false)
-        return when(resource) {
+        return when (resource) {
             R.layout.item_list -> ListContentHolder(itemView)
             R.layout.item_tile -> TileContentHolder(itemView)
             else -> CardContentHolder(itemView)
@@ -31,7 +31,7 @@ class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : Recycler
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val article = articles[position]
         val userId = "by ${article.user!!.id}"
-        when(resource) {
+        when (resource) {
             R.layout.item_list -> {
                 holder as ListContentHolder
                 holder.itemListTitleTextView.text = article.title
@@ -67,11 +67,11 @@ class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : Recycler
         this.articles.addAll(articles)
     }
 
-    fun setOnclickCallback(callback: ((String)->Unit)) {
+    fun setOnclickCallback(callback: ((String) -> Unit)) {
         onclickCallback = callback
     }
 
-    class TileContentHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class TileContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemTileTitleTextView: TextView = itemView.findViewById(R.id.itemTileTitleTextView)
         val itemTileImageView: ImageView = itemView.findViewById(R.id.itemTileImageView)
         val itemTileUserNameTextView: TextView = itemView.findViewById(R.id.itemTileUserNameTextView)
@@ -79,7 +79,7 @@ class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : Recycler
         var itemTileRelativeLayout: RelativeLayout = itemView.findViewById(R.id.itemTileRelativeLayout)
     }
 
-    class ListContentHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class ListContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemListTitleTextView: TextView = itemView.findViewById(R.id.itemListTitleTextView)
         val itemListImageView: ImageView = itemView.findViewById(R.id.itemListImageView)
         val itemListUserNameTextView: TextView = itemView.findViewById(R.id.itemListUserNameTextView)
@@ -87,7 +87,7 @@ class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : Recycler
         val itemListLayout: ConstraintLayout = itemView.findViewById(R.id.itemListLayout)
     }
 
-    class CardContentHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    class CardContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemCardTextView: TextView = itemView.findViewById(R.id.itemCardTextView)
         val itemCardImageView: ImageView = itemView.findViewById(R.id.itemCardImageView)
         val itemCardUserNameTextView: TextView = itemView.findViewById(R.id.itemCardUserNameTextView)
