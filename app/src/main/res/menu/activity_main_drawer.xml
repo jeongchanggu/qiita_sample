@@ -7,11 +7,11 @@
         <item
             android:id="@+id/nav_article"
             android:icon="@drawable/ic_article_black_24dp"
-            android:title="Article" />
+            android:title="@string/menu_article" />
         <item
             android:id="@+id/nav_tag"
             android:icon="@drawable/ic_tag_black_24dp"
-            android:title="Tag" />
+            android:title="@string/menu_tag" />
     </group>
 
 </menu>

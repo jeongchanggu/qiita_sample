@@ -11,4 +11,7 @@
     <string name="tab_name_card">CARD</string>
     <string name="error_text_load_api">データーの読み込みに失敗しました。</string>
     <string name="tag_title">Tag</string>
+    <string name="tag_post">Post</string>
+    <string name="menu_article">Article</string>
+    <string name="menu_tag">Tag</string>
 </resources>

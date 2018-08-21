@@ -61,7 +61,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="12dp"
-        android:text="Posts"
+        android:text="@string/tag_post"
         android:textSize="15sp"
         android:textStyle="bold" />
 
