@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemTileRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:padding="2dp"
+    android:layout_margin="2dp"
+    android:background="@drawable/border_tile">
+
+    <TextView
+        android:id="@+id/itemTileTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        tools:text="ItemCardFragment"
+        android:ellipsize="end"
+        android:maxLines="2"/>
+
+    <ImageView
+        android:id="@+id/itemTileImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginStart="11dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/itemTileUserNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="35dp"
+        android:layout_marginStart="66dp"
+        android:textSize="12sp"
+        tools:text="NameHere"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_alignBottom="@+id/itemTileImageView"
+        android:layout_alignStart="@+id/itemTileUserNameTextView"
+        android:adjustViewBounds="false"
+        android:src="@drawable/ic_favorite_black_24dp"
+        android:tint="#999999" />
+
+    <TextView
+        android:id="@+id/itemTileSuggestTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/itemTileImageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="80dp"
+        android:textSize="12sp"
+        tools:text="1234" />
+
+</RelativeLayout>
