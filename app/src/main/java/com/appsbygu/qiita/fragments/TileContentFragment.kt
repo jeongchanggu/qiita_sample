@@ -17,7 +17,6 @@ class TileContentFragment : ContentFragment() {
         recyclerView.adapter = ArticleAdapter(articles, R.layout.item_tile)
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = GridLayoutManager(activity, 2)
-
         return recyclerView
     }
 

@@ -14,9 +14,8 @@ import com.appsbygu.qiita.R
 import com.appsbygu.qiita.models.article.Article
 import com.squareup.picasso.Picasso
 
-class ArticleAdapter(articles: ArrayList<Article>, val resource: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val articles: ArrayList<Article> = articles
     private var onclickCallback: (String) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {

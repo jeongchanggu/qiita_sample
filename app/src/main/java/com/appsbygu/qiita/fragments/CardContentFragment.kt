@@ -17,7 +17,6 @@ class CardContentFragment : ContentFragment() {
         recyclerView.adapter = ArticleAdapter(articles, R.layout.item_card)
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-
         return recyclerView
     }
 
