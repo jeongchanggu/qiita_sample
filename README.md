@@ -4,7 +4,6 @@
 |---|---|
 | Retrofit  |  REST クライアントライブラリ  | 
 | Gson  | JSONパーサー  | 
-| Simplexml  | XMLパーサー  | 
 | Picasso  | URLイメージ表示ライブラリ  | 
 | RxJava  | 非同期処理  | 
 | RecyclerView  | Viewを繰り返し表示するためのWidget  |  
