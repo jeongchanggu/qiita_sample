@@ -24,7 +24,7 @@ abstract class ContentFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
 
     override fun onStart() {
-        fetchArticle()
+        if (page == 0) fetchArticle()
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
