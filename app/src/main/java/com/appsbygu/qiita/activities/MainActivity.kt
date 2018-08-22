@@ -1,7 +1,6 @@
 package com.appsbygu.qiita.activities
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -70,29 +69,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val tabAdapter = TabAdapter(supportFragmentManager)
 
         val listFragment = ListContentFragment()
-        listFragment.setProgressCallback { changeUnderProgressbarStatus() }
+        listFragment.setProgressCallback { changeUnderProgressbarStatus(it) }
         listFragment.setOnclickCallback { onClickedArticle(it) }
 
         val tileFragment = TileContentFragment()
-        tileFragment.setProgressCallback { changeUnderProgressbarStatus() }
+        tileFragment.setProgressCallback { changeUnderProgressbarStatus(it) }
         tileFragment.setOnclickCallback { onClickedArticle(it) }
 
         val cardFragment = CardContentFragment()
-        cardFragment.setProgressCallback { changeUnderProgressbarStatus() }
+        cardFragment.setProgressCallback { changeUnderProgressbarStatus(it) }
         cardFragment.setOnclickCallback { onClickedArticle(it) }
 
         tabAdapter.addTab(listFragment, getString(R.string.tab_name_list))
         tabAdapter.addTab(tileFragment, getString(R.string.tab_name_tile))
         tabAdapter.addTab(cardFragment, getString(R.string.tab_name_card))
         viewPager.adapter = tabAdapter
+        viewPager.offscreenPageLimit = 2
         tabs.setupWithViewPager(viewPager)
     }
 
-    private fun changeUnderProgressbarStatus() {
-        when (underProgressbar.visibility) {
-            View.VISIBLE -> underProgressbar.visibility = View.INVISIBLE
-            else -> underProgressbar.visibility = View.VISIBLE
-        }
+    private fun changeUnderProgressbarStatus(visibility: Int) {
+        underProgressbar.visibility = visibility
     }
 
     private fun onClickedArticle(html: String) {

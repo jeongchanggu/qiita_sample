@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ArticleActivity" />
-        <activity android:name=".activities.TagActivity"></activity>
+        <activity android:name=".activities.TagActivity"/>
     </application>
 
 </manifest>
