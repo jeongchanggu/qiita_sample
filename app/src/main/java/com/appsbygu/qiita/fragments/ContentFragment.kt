@@ -1,5 +1,6 @@
 package com.appsbygu.qiita.fragments
 
+import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -17,11 +18,15 @@ abstract class ContentFragment : Fragment() {
     protected var articles: ArrayList<Article> = ArrayList()
     private val disposables = CompositeDisposable()
     private var page: Int = 0
-    private var progressCallback: (Int) -> Unit = {}
-    private var onclickCallback: (String) -> Unit = {}
     private var progressStatus = false
-
     lateinit var recyclerView: RecyclerView
+
+    var activityCallback: ContentFragment.ContentListener? = null
+
+    interface ContentListener {
+        fun articleClick (html: String)
+        fun progressStatus (visibility: Int)
+    }
 
     override fun onStart() {
         if (page == 0) fetchArticle()
@@ -39,19 +44,16 @@ abstract class ContentFragment : Fragment() {
         super.onDestroy()
     }
 
-    fun setProgressCallback(callback: ((Int) -> Unit)) {
-        progressCallback = callback
-    }
-
-    fun setOnclickCallback(callback: ((String) -> Unit)) {
-        onclickCallback = callback
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        activityCallback = context as ContentListener
     }
 
     private fun fetchArticle() {
         if (progressStatus) return
         progressStatus = true
 
-        if(page > 0) progressCallback.invoke(View.VISIBLE)
+        if(page > 0) activityCallback?.progressStatus(View.VISIBLE)
         var dispose = ApiService.instance.getService()
                 .articleList(++page)
                 .subscribeOn(Schedulers.io())
@@ -64,7 +66,7 @@ abstract class ContentFragment : Fragment() {
         addArticles(articles)
         progressStatus = false
         if(page > 1) {
-            progressCallback.invoke(View.INVISIBLE)
+            activityCallback?.progressStatus(View.INVISIBLE)
             Toast.makeText(this.context, "PAGE : $page loaded", Toast.LENGTH_SHORT).show()
         }
     }
@@ -77,6 +79,6 @@ abstract class ContentFragment : Fragment() {
         var adapter = recyclerView.adapter as ArticleAdapter
         adapter.addArticles(articles)
         adapter.notifyDataSetChanged()
-        adapter.setOnclickCallback { onclickCallback(it) }
+        adapter.setOnclickCallback { activityCallback?.articleClick(it) }
     }
 }

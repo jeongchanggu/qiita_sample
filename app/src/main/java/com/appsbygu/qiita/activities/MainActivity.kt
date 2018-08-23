@@ -6,10 +6,10 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
-import android.view.View
 import com.appsbygu.qiita.R
 import com.appsbygu.qiita.adapters.TabAdapter
 import com.appsbygu.qiita.fragments.CardContentFragment
+import com.appsbygu.qiita.fragments.ContentFragment
 import com.appsbygu.qiita.fragments.ListContentFragment
 import com.appsbygu.qiita.fragments.TileContentFragment
 
@@ -17,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, ContentFragment.ContentListener {
 
     private val disposables = CompositeDisposable()
 
@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view.setNavigationItemSelectedListener(this)
         nav_view.menu.getItem(0).isChecked = true
+
         initTab()
     }
 
@@ -65,36 +66,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onResume()
     }
 
-    private fun initTab() {
-        val tabAdapter = TabAdapter(supportFragmentManager)
+    // Implement : ContentFragment.ContentListener
 
-        val listFragment = ListContentFragment()
-        listFragment.setProgressCallback { changeUnderProgressbarStatus(it) }
-        listFragment.setOnclickCallback { onClickedArticle(it) }
-
-        val tileFragment = TileContentFragment()
-        tileFragment.setProgressCallback { changeUnderProgressbarStatus(it) }
-        tileFragment.setOnclickCallback { onClickedArticle(it) }
-
-        val cardFragment = CardContentFragment()
-        cardFragment.setProgressCallback { changeUnderProgressbarStatus(it) }
-        cardFragment.setOnclickCallback { onClickedArticle(it) }
-
-        tabAdapter.addTab(listFragment, getString(R.string.tab_name_list))
-        tabAdapter.addTab(tileFragment, getString(R.string.tab_name_tile))
-        tabAdapter.addTab(cardFragment, getString(R.string.tab_name_card))
-        viewPager.adapter = tabAdapter
-        viewPager.offscreenPageLimit = 2
-        tabs.setupWithViewPager(viewPager)
+    override fun articleClick(html: String) {
+        val intent = ArticleActivity.createIntent(this, html)
+        startActivity(intent)
     }
 
-    private fun changeUnderProgressbarStatus(visibility: Int) {
+    override fun progressStatus(visibility: Int) {
         underProgressbar.visibility = visibility
     }
 
-    private fun onClickedArticle(html: String) {
-        val intent = ArticleActivity.createIntent(this, html)
-        startActivity(intent)
+    private fun initTab() {
+        val tabAdapter = TabAdapter(supportFragmentManager)
+
+        tabAdapter.addTab(ListContentFragment(), getString(R.string.tab_name_list))
+        tabAdapter.addTab(TileContentFragment(), getString(R.string.tab_name_tile))
+        tabAdapter.addTab(CardContentFragment(), getString(R.string.tab_name_card))
+        viewPager.adapter = tabAdapter
+        viewPager.offscreenPageLimit = 2
+        tabs.setupWithViewPager(viewPager)
     }
 
 }
