@@ -29,6 +29,6 @@ class TileContentFragment : ContentFragment() {
 
     override fun onStart() {
         super.onStart()
-        if(savedScrollPosition > 0) (recyclerView.layoutManager as GridLayoutManager).scrollToPosition(savedScrollPosition)
+        if (savedScrollPosition > 0) (recyclerView.layoutManager as GridLayoutManager).scrollToPosition(savedScrollPosition)
     }
 }

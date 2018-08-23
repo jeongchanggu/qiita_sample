@@ -35,8 +35,8 @@ abstract class ContentFragment : Fragment() {
     var activityCallback: ContentFragment.ContentListener? = null
 
     interface ContentListener {
-        fun articleClick (html: String)
-        fun progressStatus (visibility: Int)
+        fun articleClick(html: String)
+        fun progressStatus(visibility: Int)
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {
@@ -48,10 +48,10 @@ abstract class ContentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        savedInstanceState?.let{
+        savedInstanceState?.let {
             page = it.getInt(SAVED_PAGE)
             val collectionType = object : TypeToken<ArrayList<Article>>() {}.type
-            articles =  Gson().fromJson(it.getString(SAVED_ARTICLES), collectionType)
+            articles = Gson().fromJson(it.getString(SAVED_ARTICLES), collectionType)
             savedScrollPosition = it.getInt(SAVED_SCROLL_POSITION)
         }
     }
@@ -81,7 +81,7 @@ abstract class ContentFragment : Fragment() {
         if (progressStatus) return
         progressStatus = true
 
-        if(page > 0) activityCallback?.progressStatus(View.VISIBLE)
+        if (page > 0) activityCallback?.progressStatus(View.VISIBLE)
         var dispose = ApiService.instance.getService()
                 .articleList(++page)
                 .subscribeOn(Schedulers.io())
@@ -93,7 +93,7 @@ abstract class ContentFragment : Fragment() {
     private fun afterArticleLoaded(articles: ArrayList<Article>) {
         addArticles(articles)
         progressStatus = false
-        if(page > 1) {
+        if (page > 1) {
             activityCallback?.progressStatus(View.INVISIBLE)
             Toast.makeText(this.context, "PAGE : $page loaded", Toast.LENGTH_SHORT).show()
         }

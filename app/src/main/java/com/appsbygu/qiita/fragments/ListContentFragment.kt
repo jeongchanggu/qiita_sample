@@ -29,6 +29,6 @@ class ListContentFragment : ContentFragment() {
 
     override fun onStart() {
         super.onStart()
-        if(savedScrollPosition > 0) (recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(savedScrollPosition)
+        if (savedScrollPosition > 0) (recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(savedScrollPosition)
     }
 }
