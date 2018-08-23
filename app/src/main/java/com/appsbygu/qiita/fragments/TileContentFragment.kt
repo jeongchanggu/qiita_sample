@@ -2,6 +2,7 @@ package com.appsbygu.qiita.fragments
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -20,4 +21,14 @@ class TileContentFragment : ContentFragment() {
         return recyclerView
     }
 
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        savedScrollPosition = (recyclerView.layoutManager as GridLayoutManager).findFirstCompletelyVisibleItemPosition()
+        bundle.putInt(SAVED_SCROLL_POSITION, savedScrollPosition)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(savedScrollPosition > 0) (recyclerView.layoutManager as GridLayoutManager).scrollToPosition(savedScrollPosition)
+    }
 }

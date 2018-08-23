@@ -20,4 +20,14 @@ class CardContentFragment : ContentFragment() {
         return recyclerView
     }
 
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        savedScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        bundle.putInt(SAVED_SCROLL_POSITION, savedScrollPosition)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(savedScrollPosition > 0) (recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(savedScrollPosition)
+    }
 }

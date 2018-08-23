@@ -1,18 +1,28 @@
 package com.appsbygu.qiita.fragments
 
 import android.content.Context
+import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.appsbygu.qiita.R
 import com.appsbygu.qiita.adapters.ArticleAdapter
 import com.appsbygu.qiita.models.article.Article
 import com.appsbygu.qiita.services.ApiService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+
+const val SAVED_ARTICLES = "savedArticles"
+const val SAVED_PAGE = "savedPage"
+const val SAVED_SCROLL_POSITION = "savedScrollPosition"
 
 abstract class ContentFragment : Fragment() {
     protected var articles: ArrayList<Article> = ArrayList()
@@ -20,12 +30,30 @@ abstract class ContentFragment : Fragment() {
     private var page: Int = 0
     private var progressStatus = false
     lateinit var recyclerView: RecyclerView
+    protected var savedScrollPosition = 0
 
     var activityCallback: ContentFragment.ContentListener? = null
 
     interface ContentListener {
         fun articleClick (html: String)
         fun progressStatus (visibility: Int)
+    }
+
+    override fun onSaveInstanceState(bundle: Bundle) {
+        bundle.putString(SAVED_ARTICLES, Gson().toJson(articles))
+        bundle.putInt(SAVED_PAGE, page)
+        super.onSaveInstanceState(bundle)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        savedInstanceState?.let{
+            page = it.getInt(SAVED_PAGE)
+            val collectionType = object : TypeToken<ArrayList<Article>>() {}.type
+            articles =  Gson().fromJson(it.getString(SAVED_ARTICLES), collectionType)
+            savedScrollPosition = it.getInt(SAVED_SCROLL_POSITION)
+        }
     }
 
     override fun onStart() {

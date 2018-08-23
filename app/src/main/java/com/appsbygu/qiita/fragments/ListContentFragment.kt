@@ -3,6 +3,7 @@ package com.appsbygu.qiita.fragments
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,4 +21,14 @@ class ListContentFragment : ContentFragment() {
         return recyclerView
     }
 
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        savedScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+        bundle.putInt(SAVED_SCROLL_POSITION, savedScrollPosition)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(savedScrollPosition > 0) (recyclerView.layoutManager as LinearLayoutManager).scrollToPosition(savedScrollPosition)
+    }
 }
