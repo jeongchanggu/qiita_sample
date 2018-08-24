@@ -9,10 +9,9 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.appsbygu.qiita.R
-import com.appsbygu.qiita.models.article.Article
 import com.squareup.picasso.Picasso
 
-class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int, private val adapterCallback: ArticleAdapter.ArticleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArticleAdapter(private val articles: ArrayList<com.appsbygu.qiita.models.simple.Article>, val resource: Int, private val adapterCallback: ArticleAdapter.ArticleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     interface ArticleListener {
@@ -39,7 +38,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
                 Picasso.get().load(article.user!!.profileImageUrl).into(holder.itemListImageView)
                 holder.itemListUserNameTextView.text = userId
                 holder.itemListSuggestTextView.text = article.likesCount.toString()
-                holder.itemListLayout.setOnClickListener { adapterCallback?.onButtonClick(article.renderedBody!!) }
+                holder.itemListLayout.setOnClickListener { adapterCallback?.onButtonClick(article.id!!) }
             }
             R.layout.item_tile -> {
                 holder as TileContentHolder
@@ -47,7 +46,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
                 Picasso.get().load(article.user!!.profileImageUrl).into(holder.itemTileImageView)
                 holder.itemTileUserNameTextView.text = userId
                 holder.itemTileSuggestTextView.text = article.likesCount.toString()
-                holder.itemTileRelativeLayout.setOnClickListener { adapterCallback?.onButtonClick(article.renderedBody!!) }
+                holder.itemTileRelativeLayout.setOnClickListener { adapterCallback?.onButtonClick(article.id!!) }
             }
             R.layout.item_card -> {
                 holder as CardContentHolder
@@ -55,7 +54,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
                 Picasso.get().load(article.user!!.profileImageUrl).into(holder.itemCardImageView)
                 holder.itemCardUserNameTextView.text = userId
                 holder.itemCardSuggestTextView.text = article.likesCount.toString()
-                holder.itemCardRelativeLayout.setOnClickListener { adapterCallback?.onButtonClick(article.renderedBody!!) }
+                holder.itemCardRelativeLayout.setOnClickListener { adapterCallback?.onButtonClick(article.id!!) }
             }
         }
     }
@@ -64,7 +63,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
         return articles.size
     }
 
-    fun addArticles(articles: ArrayList<Article>) {
+    fun addArticles(articles: ArrayList<com.appsbygu.qiita.models.simple.Article>) {
         this.articles.addAll(articles)
     }
 

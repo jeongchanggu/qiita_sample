@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import com.appsbygu.qiita.R
 import com.appsbygu.qiita.adapters.ArticleAdapter
-import com.appsbygu.qiita.models.article.Article
+import com.appsbygu.qiita.models.simple.Article
 import com.appsbygu.qiita.services.ApiService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -73,8 +73,13 @@ abstract class ContentFragment : Fragment(), ArticleAdapter.ArticleListener {
         activityCallback = context as ContentListener
     }
 
-    override fun onButtonClick(html: String) {
-        activityCallback?.articleClick(html)
+    override fun onButtonClick(id: String) {
+        var dispose = ApiService.instance.getService()
+                .articleByID(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::afterArticleLoadedByID, this::afterArticleLoadedFail)
+        disposables.add(dispose)
     }
 
     private fun fetchArticle() {
@@ -83,11 +88,15 @@ abstract class ContentFragment : Fragment(), ArticleAdapter.ArticleListener {
 
         if (page > 0) activityCallback?.progressStatus(View.VISIBLE)
         var dispose = ApiService.instance.getService()
-                .articleList(++page)
+                .articleListSimple(++page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::afterArticleLoaded, this::afterArticleLoadedFail)
         disposables.add(dispose)
+    }
+
+    private fun afterArticleLoadedByID(article: com.appsbygu.qiita.models.article.Article) {
+        activityCallback?.articleClick(article.renderedBody!!)
     }
 
     private fun afterArticleLoaded(articles: ArrayList<Article>) {
