@@ -3,7 +3,6 @@ package com.appsbygu.qiita.fragments
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ class ListContentFragment : ContentFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         recyclerView = inflater.inflate(R.layout.recycler_view, container, false) as RecyclerView
-        recyclerView.adapter = ArticleAdapter(articles, R.layout.item_list)
+        recyclerView.adapter = ArticleAdapter(articles, R.layout.item_list, this)
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         return recyclerView

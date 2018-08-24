@@ -2,8 +2,6 @@ package com.appsbygu.qiita.adapters
 
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +12,16 @@ import com.appsbygu.qiita.R
 import com.appsbygu.qiita.models.article.Article
 import com.squareup.picasso.Picasso
 
-class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int, private val adapterCallback: ArticleAdapter.ArticleListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var onclickCallback: (String) -> Unit = {}
+
+    interface ArticleListener {
+        fun onButtonClick(html: String)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): RecyclerView.ViewHolder {
         val itemView: View = LayoutInflater.from(parent.context).inflate(resource, parent, false)
+
         return when (resource) {
             R.layout.item_list -> ListContentHolder(itemView)
             R.layout.item_tile -> TileContentHolder(itemView)
@@ -37,7 +39,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
                 Picasso.get().load(article.user!!.profileImageUrl).into(holder.itemListImageView)
                 holder.itemListUserNameTextView.text = userId
                 holder.itemListSuggestTextView.text = article.likesCount.toString()
-                holder.itemListLayout.setOnClickListener { onclickCallback.invoke(article.renderedBody!!) }
+                holder.itemListLayout.setOnClickListener { adapterCallback?.onButtonClick(article.renderedBody!!) }
             }
             R.layout.item_tile -> {
                 holder as TileContentHolder
@@ -45,7 +47,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
                 Picasso.get().load(article.user!!.profileImageUrl).into(holder.itemTileImageView)
                 holder.itemTileUserNameTextView.text = userId
                 holder.itemTileSuggestTextView.text = article.likesCount.toString()
-                holder.itemTileRelativeLayout.setOnClickListener { onclickCallback.invoke(article.renderedBody!!) }
+                holder.itemTileRelativeLayout.setOnClickListener { adapterCallback?.onButtonClick(article.renderedBody!!) }
             }
             R.layout.item_card -> {
                 holder as CardContentHolder
@@ -53,7 +55,7 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
                 Picasso.get().load(article.user!!.profileImageUrl).into(holder.itemCardImageView)
                 holder.itemCardUserNameTextView.text = userId
                 holder.itemCardSuggestTextView.text = article.likesCount.toString()
-                holder.itemCardRelativeLayout.setOnClickListener { onclickCallback.invoke(article.renderedBody!!) }
+                holder.itemCardRelativeLayout.setOnClickListener { adapterCallback?.onButtonClick(article.renderedBody!!) }
             }
         }
     }
@@ -64,10 +66,6 @@ class ArticleAdapter(private val articles: ArrayList<Article>, val resource: Int
 
     fun addArticles(articles: ArrayList<Article>) {
         this.articles.addAll(articles)
-    }
-
-    fun setOnclickCallback(callback: ((String) -> Unit)) {
-        onclickCallback = callback
     }
 
     class TileContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

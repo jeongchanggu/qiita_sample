@@ -14,7 +14,7 @@ class CardContentFragment : ContentFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         recyclerView = inflater.inflate(R.layout.recycler_view, container, false) as RecyclerView
-        recyclerView.adapter = ArticleAdapter(articles, R.layout.item_card)
+        recyclerView.adapter = ArticleAdapter(articles, R.layout.item_card, this)
         recyclerView.setHasFixedSize(false)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         return recyclerView

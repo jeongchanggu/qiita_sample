@@ -3,12 +3,8 @@ package com.appsbygu.qiita.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.appsbygu.qiita.R
 import com.appsbygu.qiita.adapters.ArticleAdapter
@@ -24,7 +20,7 @@ const val SAVED_ARTICLES = "savedArticles"
 const val SAVED_PAGE = "savedPage"
 const val SAVED_SCROLL_POSITION = "savedScrollPosition"
 
-abstract class ContentFragment : Fragment() {
+abstract class ContentFragment : Fragment(), ArticleAdapter.ArticleListener {
     protected var articles: ArrayList<Article> = ArrayList()
     private val disposables = CompositeDisposable()
     private var page: Int = 0
@@ -77,6 +73,10 @@ abstract class ContentFragment : Fragment() {
         activityCallback = context as ContentListener
     }
 
+    override fun onButtonClick(html: String) {
+        activityCallback?.articleClick(html)
+    }
+
     private fun fetchArticle() {
         if (progressStatus) return
         progressStatus = true
@@ -107,6 +107,5 @@ abstract class ContentFragment : Fragment() {
         var adapter = recyclerView.adapter as ArticleAdapter
         adapter.addArticles(articles)
         adapter.notifyDataSetChanged()
-        adapter.setOnclickCallback { activityCallback?.articleClick(it) }
     }
 }
